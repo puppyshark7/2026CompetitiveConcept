@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.Falcon500;
 import frc.robot.Constants.KrakenX60;
 import frc.robot.Ports;
 
@@ -66,7 +67,7 @@ public class Intake extends SubsystemBase {
     }
 
     private static final double kPivotReduction = 50.0;
-    private static final AngularVelocity kMaxPivotSpeed = KrakenX60.kFreeSpeed.div(kPivotReduction);
+    private static final AngularVelocity kMaxPivotSpeed = Falcon500.kFreeSpeed.div(kPivotReduction);
     private static final Angle kPositionTolerance = Degrees.of(5);
 
     private final TalonFX pivotMotor, rollerMotor;
@@ -77,7 +78,7 @@ public class Intake extends SubsystemBase {
     private boolean isHomed = false;
 
     public Intake() {
-        pivotMotor = new TalonFX(Ports.kIntakePivot, Ports.kCANivoreCANBus);
+        pivotMotor = new TalonFX(Ports.kIntakePivot, Ports.kRoboRioCANBus);
         rollerMotor = new TalonFX(Ports.kIntakeRollers, Ports.kRoboRioCANBus);
         configurePivotMotor();
         configureRollerMotor();

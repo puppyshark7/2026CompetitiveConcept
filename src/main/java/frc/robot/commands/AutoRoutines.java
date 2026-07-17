@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Floor;
-import frc.robot.subsystems.Hanger;
+//import frc.robot.subsystems.Hanger;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
@@ -32,7 +32,7 @@ public final class AutoRoutines {
     private final Feeder feeder;
     private final Shooter shooter;
     private final Hood hood;
-    private final Hanger hanger;
+    // private final Hanger hanger;
     private final Limelight limelight;
 
     private final SubsystemCommands subsystemCommands;
@@ -47,7 +47,7 @@ public final class AutoRoutines {
         Feeder feeder,
         Shooter shooter,
         Hood hood,
-        Hanger hanger,
+        // Hanger hanger,
         Limelight limelight
     ) {
         this.swerve = swerve;
@@ -56,10 +56,12 @@ public final class AutoRoutines {
         this.feeder = feeder;
         this.shooter = shooter;
         this.hood = hood;
-        this.hanger = hanger;
+        // this.hanger = hanger;
         this.limelight = limelight;
 
-        this.subsystemCommands = new SubsystemCommands(swerve, intake, floor, feeder, shooter, hood, hanger);
+        this.subsystemCommands = new SubsystemCommands(swerve, intake, floor, feeder, shooter, hood 
+        //, hanger
+        );
 
         this.autoFactory = swerve.createAutoFactory();
         this.autoChooser = new AutoChooser();
@@ -81,14 +83,8 @@ public final class AutoRoutines {
         routine.active().onTrue(
             Commands.sequence(
                 startToOutpost.resetOdometry(),
+                intake.runOnce(() -> intake.set(Intake.Position.INTAKE)),
                 startToOutpost.cmd()
-            )
-        );
-
-        routine.observe(hanger::isHomed).onTrue(
-            Commands.sequence(
-                Commands.waitSeconds(0.5),
-                intake.runOnce(() -> intake.set(Intake.Position.INTAKE))
             )
         );
 
@@ -113,8 +109,8 @@ public final class AutoRoutines {
         );
 
         shootingPoseToTower.active().whileTrue(limelight.idle());
-        shootingPoseToTower.active().onTrue(hanger.positionCommand(Hanger.Position.HANGING));
-        shootingPoseToTower.done().onTrue(hanger.positionCommand(Hanger.Position.HUNG));
+        // shootingPoseToTower.active().onTrue(hanger.positionCommand(Hanger.Position.HANGING));
+        // shootingPoseToTower.done().onTrue(hanger.positionCommand(Hanger.Position.HUNG));
 
         return routine;
     }

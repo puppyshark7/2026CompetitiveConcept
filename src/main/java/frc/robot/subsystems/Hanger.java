@@ -33,6 +33,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.KrakenX60;
 import frc.robot.Ports;
 
+// Hanger is not being used
+/*
 public class Hanger extends SubsystemBase {
     public enum Position {
         HOMED(0),
@@ -149,3 +151,4 @@ public class Hanger extends SubsystemBase {
         builder.addDoubleProperty("Supply Current", () -> motor.getSupplyCurrent().getValue().in(Amps), null);
     }
 }
+*/
