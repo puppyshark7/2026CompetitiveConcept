@@ -24,6 +24,7 @@ public class Hood extends SubsystemBase {
     private static final double kMinPosition = 0.01;
     private static final double kMaxPosition = 0.77;
     private static final double kPositionTolerance = 0.01;
+    private static final double kManualAdjustmentStep = 0.01;
 
     private final Servo leftServo;
     private final Servo rightServo;
@@ -47,6 +48,10 @@ public class Hood extends SubsystemBase {
         leftServo.set(clampedPosition);
         rightServo.set(clampedPosition);
         targetPosition = clampedPosition;
+    }
+
+    public void adjustPosition(double delta) {
+        setPosition(targetPosition + delta);
     }
 
     /** Expects a position between 0.0 and 1.0 */

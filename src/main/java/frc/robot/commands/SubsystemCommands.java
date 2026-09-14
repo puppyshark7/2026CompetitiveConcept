@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -76,8 +77,25 @@ public final class SubsystemCommands {
     }
 
     public Command shootManually() {
-        return shooter.dashboardSpinUpCommand()
-            .andThen(feed())
+        return shootManually(() -> false, () -> false);
+    }
+
+    public Command shootManually(BooleanSupplier lowerHood, BooleanSupplier raiseHood) {
+        return Commands.run(
+                () -> {
+                    if (lowerHood.getAsBoolean()) {
+                        hood.adjustPosition(-0.01);
+                    }
+                    if (raiseHood.getAsBoolean()) {
+                        hood.adjustPosition(0.01);
+                    }
+                },
+                hood
+            )
+            .alongWith(
+                shooter.dashboardSpinUpCommand()
+                    .andThen(feed())
+            )
             .handleInterrupt(() -> shooter.stop());
     }
 
