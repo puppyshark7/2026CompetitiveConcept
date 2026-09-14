@@ -100,7 +100,7 @@ public class RobotContainer {
     private void configureManualDriveBindings() {
         final ManualDriveCommand manualDriveCommand = new ManualDriveCommand(
             swerve, 
-            () -> -driver.getLeftY(), 
+            () -> driver.getLeftY(), 
             () -> -driver.getLeftX(), 
             () -> -driver.getRightX()
         );
@@ -109,8 +109,9 @@ public class RobotContainer {
         driver.b().onTrue(Commands.runOnce(() -> manualDriveCommand.setLockedHeading(Rotation2d.kCW_90deg)));
         driver.x().onTrue(Commands.runOnce(() -> manualDriveCommand.setLockedHeading(Rotation2d.kCCW_90deg)));
         driver.y().onTrue(Commands.runOnce(() -> manualDriveCommand.setLockedHeading(Rotation2d.kZero)));
-        driver.back().onTrue(Commands.runOnce(() -> manualDriveCommand.seedFieldCentric()));
+        driver.povDown().onTrue(Commands.runOnce(() -> manualDriveCommand.seedFieldCentric()));
     }
+
 
     private Command updateVisionCommand() {
         return limelight.run(() -> {
