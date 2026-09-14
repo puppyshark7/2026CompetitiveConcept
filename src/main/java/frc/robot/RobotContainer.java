@@ -100,7 +100,7 @@ public class RobotContainer {
     private void configureManualDriveBindings() {
         final ManualDriveCommand manualDriveCommand = new ManualDriveCommand(
             swerve, 
-            () -> driver.getLeftY(), 
+            () -> -driver.getLeftY(), 
             () -> -driver.getLeftX(), 
             () -> -driver.getRightX()
         );
