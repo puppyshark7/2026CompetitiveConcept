@@ -124,7 +124,7 @@ public class ManualDriveCommand extends Command {
                 lockHeadingIfRotationStopped(input);
                 swerve.setControl(
                     fieldCentricRequest
-                        .withVelocityX(Driving.kMaxSpeed.times(-input.forward))
+                        .withVelocityX(Driving.kMaxSpeed.times(input.forward))
                         .withVelocityY(Driving.kMaxSpeed.times(input.left))
                         .withRotationalRate(Driving.kMaxRotationalRate.times(input.rotation))
                 );

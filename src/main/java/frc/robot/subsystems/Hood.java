@@ -24,6 +24,7 @@ public class Hood extends SubsystemBase {
     private static final double kMinPosition = 0.01;
     private static final double kMaxPosition = 0.77;
     private static final double kPositionTolerance = 0.01;
+    private static final double kManualAdjustmentPerCycle = 0.01;
 
     private final Servo leftServo;
     private final Servo rightServo;
@@ -55,6 +56,10 @@ public class Hood extends SubsystemBase {
             .andThen(Commands.waitUntil(this::isPositionWithinTolerance));
     }
 
+    public Command adjustPositionCommand(double direction) {
+        return run(() -> setPosition(targetPosition + direction * kManualAdjustmentPerCycle));
+    }
+
     public boolean isPositionWithinTolerance() {
         return MathUtil.isNear(targetPosition, currentPosition, kPositionTolerance);
     }
@@ -79,6 +84,7 @@ public class Hood extends SubsystemBase {
     @Override
     public void periodic() {
         updateCurrentPosition();
+        SmartDashboard.putNumber("Hood Current Position", currentPosition);
     }
 
     @Override

@@ -93,6 +93,8 @@ public class RobotContainer {
 
         driver.rightTrigger().whileTrue(subsystemCommands.aimAndShoot());
         driver.rightBumper().whileTrue(subsystemCommands.shootManually());
+        driver.povLeft().whileTrue(hood.adjustPositionCommand(-1.0));
+        driver.povRight().whileTrue(hood.adjustPositionCommand(1.0));
         driver.leftTrigger().whileTrue(intake.intakeCommand());
         driver.leftBumper().onTrue(intake.runOnce(() -> intake.set(Intake.Position.STOWED)));
     }

@@ -119,6 +119,13 @@ public class Shooter extends SubsystemBase {
         });
     }
 
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Launcher Left RPM", leftMotor.getVelocity().getValue().in(RPM));
+        SmartDashboard.putNumber("Launcher Middle RPM", middleMotor.getVelocity().getValue().in(RPM));
+        SmartDashboard.putNumber("Launcher Right RPM", rightMotor.getVelocity().getValue().in(RPM));
+    }
+
     private void initSendable(SendableBuilder builder, TalonFX motor, String name) {
         builder.addDoubleProperty(name + " RPM", () -> motor.getVelocity().getValue().in(RPM), null);
         builder.addDoubleProperty(name + " Stator Current", () -> motor.getStatorCurrent().getValue().in(Amps), null);
