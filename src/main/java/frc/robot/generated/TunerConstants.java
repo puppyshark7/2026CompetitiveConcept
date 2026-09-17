@@ -95,7 +95,7 @@ public class TunerConstants {
     private static final CANcoderConfiguration encoderInitialConfigs = new CANcoderConfiguration();
     public static final double kPigeonMountPoseYawDegrees = 0;
     public static final double kPigeonMountPosePitchDegrees = 0;
-    public static final double kPigeonMountPoseRollDegrees = 0;
+    public static final double kPigeonMountPoseRollDegrees = 180;
 
     private static final Pigeon2Configuration pigeonConfigs = new Pigeon2Configuration()
         .withMountPose(
