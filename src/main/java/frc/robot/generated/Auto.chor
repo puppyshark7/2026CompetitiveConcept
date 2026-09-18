@@ -76,7 +76,7 @@
  },
  "generationFeatures":[],
  "codegen":{
-  "root":"../C:/Users/puppy/GitHub/2026CompetitiveConcept/src/main/java/frc/robot/generated",
+  "root":"..",
   "genVars":true,
   "genTrajData":true,
   "useChoreoLib":true
