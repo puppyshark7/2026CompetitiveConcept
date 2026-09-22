@@ -196,7 +196,7 @@ public class Intake extends SubsystemBase {
             runOnce(() -> {
                 pivotMotor.setPosition(Position.HOMED.angle());
                 isHomed = true;
-                set(Position.STOWED);
+                set(Position.INTAKE);
             })
         )
         .unless(() -> isHomed)

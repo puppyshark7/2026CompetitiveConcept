@@ -56,6 +56,7 @@ public class RobotContainer {
         hood,
         limelight
     );
+    
     private final SubsystemCommands subsystemCommands = new SubsystemCommands(
         swerve,
         intake,
@@ -91,7 +92,7 @@ public class RobotContainer {
             .onTrue(intake.homingCommand())
             ;
 
-        driver.rightTrigger().whileTrue(subsystemCommands.aimAndShoot());
+        //driver.rightTrigger().whileTrue(subsystemCommands.aimAndShoot());
         driver.rightBumper().whileTrue(subsystemCommands.shootManually());
         driver.povLeft().whileTrue(hood.adjustPositionCommand(-1.0));
         driver.povRight().whileTrue(hood.adjustPositionCommand(1.0));
