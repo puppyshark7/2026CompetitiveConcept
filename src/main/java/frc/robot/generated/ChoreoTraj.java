@@ -1,4 +1,4 @@
-
+// spotless:off
 package frc.robot.generated;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -6,10 +6,10 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import java.util.Map;
 import java.util.OptionalInt;
 
-// If these imports cause errors because you're not using ChoreoLib,
-// turn off "Include ChoreoLib-specific Helpers" in Choreo's codegen settings.
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
+// If the 2 imports above cause errors because you're not using ChoreoLib,
+// turn off "Include ChoreoLib-specific Helpers" in Choreo's codegen settings.
 
 /**
  * A class containing the name, start pose, end pose, and total time of every Choreo trajectory.
@@ -24,52 +24,92 @@ public record ChoreoTraj(
     Pose2d initialPoseBlue,
     Pose2d endPoseBlue
 ) {
+    public static final ChoreoTraj EndCycle = new ChoreoTraj(
+        "EndCycle",
+        OptionalInt.empty(),
+        1.35108,
+        new Pose2d(2, 2, Rotation2d.fromRadians(0.65834)),
+        new Pose2d(6.05307, 2.80761, Rotation2d.fromRadians(0.65834))
+    );
+    public static final ChoreoTraj FullCycle = new ChoreoTraj(
+        "FullCycle",
+        OptionalInt.empty(),
+        5.1195,
+        new Pose2d(2, 2, Rotation2d.fromRadians(0.65834)),
+        new Pose2d(2, 2.00235, Rotation2d.fromRadians(0.67396))
+    );
+    public static final ChoreoTraj IntakeCycle = new ChoreoTraj(
+        "IntakeCycle",
+        OptionalInt.empty(),
+        3.85664,
+        new Pose2d(2, 2, Rotation2d.fromRadians(0.65834)),
+        new Pose2d(5.8579, 3.19445, Rotation2d.fromRadians(-3.14159))
+    );
+    public static final ChoreoTraj OldFullCycle = new ChoreoTraj(
+        "OldFullCycle",
+        OptionalInt.empty(),
+        5.76481,
+        new Pose2d(2, 2, Rotation2d.fromRadians(0.65834)),
+        new Pose2d(2, 2, Rotation2d.fromRadians(0.67318))
+    );
     public static final ChoreoTraj OutpostAndDepotTrajectory = new ChoreoTraj(
-	    "OutpostAndDepotTrajectory",
-	    OptionalInt.empty(),
-	    11.3563,
-	    new Pose2d(3.598, 0.64, Rotation2d.fromRadians(3.142)),
-	    new Pose2d(0.941, 3.564, Rotation2d.fromRadians(3.142))
-	);
-	public static final ChoreoTraj OutpostAndDepotTrajectory$0 = new ChoreoTraj(
-	    "OutpostAndDepotTrajectory",
-	    OptionalInt.of(0),
-	    1.81742,
-	    new Pose2d(3.598, 0.64, Rotation2d.fromRadians(3.142)),
-	    new Pose2d(0.581, 0.669, Rotation2d.fromRadians(3.142))
-	);
-	public static final ChoreoTraj OutpostAndDepotTrajectory$1 = new ChoreoTraj(
-	    "OutpostAndDepotTrajectory",
-	    OptionalInt.of(1),
-	    3.40099,
-	    new Pose2d(0.581, 0.669, Rotation2d.fromRadians(3.142)),
-	    new Pose2d(0.668, 5.964, Rotation2d.fromRadians(3.142))
-	);
-	public static final ChoreoTraj OutpostAndDepotTrajectory$2 = new ChoreoTraj(
-	    "OutpostAndDepotTrajectory",
-	    OptionalInt.of(2),
-	    2.5827799999999996,
-	    new Pose2d(0.668, 5.964, Rotation2d.fromRadians(3.142)),
-	    new Pose2d(2.498, 4.035, Rotation2d.fromRadians(0))
-	);
-	public static final ChoreoTraj OutpostAndDepotTrajectory$3 = new ChoreoTraj(
-	    "OutpostAndDepotTrajectory",
-	    OptionalInt.of(3),
-	    3.555109999999999,
-	    new Pose2d(2.498, 4.035, Rotation2d.fromRadians(0)),
-	    new Pose2d(0.941, 3.564, Rotation2d.fromRadians(3.142))
-	);
+        "OutpostAndDepotTrajectory",
+        OptionalInt.empty(),
+        11.06419,
+        new Pose2d(3.59816, 0.63985, Rotation2d.fromRadians(3.14159)),
+        new Pose2d(0.94136, 3.56436, Rotation2d.fromRadians(3.14159))
+    );
+    public static final ChoreoTraj OutpostAndDepotTrajectory$0 = new ChoreoTraj(
+        "OutpostAndDepotTrajectory",
+        OptionalInt.of(0),
+        1.81742,
+        new Pose2d(3.59816, 0.63985, Rotation2d.fromRadians(3.14159)),
+        new Pose2d(0.58146, 0.6689, Rotation2d.fromRadians(3.14159))
+    );
+    public static final ChoreoTraj OutpostAndDepotTrajectory$1 = new ChoreoTraj(
+        "OutpostAndDepotTrajectory",
+        OptionalInt.of(1),
+        3.41535,
+        new Pose2d(0.58146, 0.6689, Rotation2d.fromRadians(3.14159)),
+        new Pose2d(0.66833, 5.96377, Rotation2d.fromRadians(3.14159))
+    );
+    public static final ChoreoTraj OutpostAndDepotTrajectory$2 = new ChoreoTraj(
+        "OutpostAndDepotTrajectory",
+        OptionalInt.of(2),
+        2.3571099999999996,
+        new Pose2d(0.66833, 5.96377, Rotation2d.fromRadians(3.14159)),
+        new Pose2d(2.49839, 4.03528, Rotation2d.fromRadians(0))
+    );
+    public static final ChoreoTraj OutpostAndDepotTrajectory$3 = new ChoreoTraj(
+        "OutpostAndDepotTrajectory",
+        OptionalInt.of(3),
+        3.47431,
+        new Pose2d(2.49839, 4.03528, Rotation2d.fromRadians(0)),
+        new Pose2d(0.94136, 3.56436, Rotation2d.fromRadians(3.14159))
+    );
+    public static final ChoreoTraj StartCycle = new ChoreoTraj(
+        "StartCycle",
+        OptionalInt.empty(),
+        6.35246,
+        new Pose2d(3.5, 2, Rotation2d.fromRadians(0)),
+        new Pose2d(2, 2.00235, Rotation2d.fromRadians(0.67396))
+    );
 
     /**
      * A map between trajectory names and their corresponding data.
      * This allows for trajectory data to be looked up with strings during runtime.
      */
     public static final Map<String, ChoreoTraj> ALL_TRAJECTORIES = Map.ofEntries(
-    	Map.entry("OutpostAndDepotTrajectory", OutpostAndDepotTrajectory),
-		Map.entry("OutpostAndDepotTrajectory$0", OutpostAndDepotTrajectory$0),
-		Map.entry("OutpostAndDepotTrajectory$1", OutpostAndDepotTrajectory$1),
-		Map.entry("OutpostAndDepotTrajectory$2", OutpostAndDepotTrajectory$2),
-		Map.entry("OutpostAndDepotTrajectory$3", OutpostAndDepotTrajectory$3)
+        Map.entry("EndCycle", EndCycle),
+        Map.entry("FullCycle", FullCycle),
+        Map.entry("IntakeCycle", IntakeCycle),
+        Map.entry("OldFullCycle", OldFullCycle),
+        Map.entry("OutpostAndDepotTrajectory", OutpostAndDepotTrajectory),
+        Map.entry("OutpostAndDepotTrajectory$0", OutpostAndDepotTrajectory$0),
+        Map.entry("OutpostAndDepotTrajectory$1", OutpostAndDepotTrajectory$1),
+        Map.entry("OutpostAndDepotTrajectory$2", OutpostAndDepotTrajectory$2),
+        Map.entry("OutpostAndDepotTrajectory$3", OutpostAndDepotTrajectory$3),
+        Map.entry("StartCycle", StartCycle)
     );
 
     /**
@@ -96,3 +136,4 @@ public record ChoreoTraj(
         return routine.trajectory(this.name);
     }
 }
+// spotless:on

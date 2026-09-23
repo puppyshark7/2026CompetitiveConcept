@@ -8,6 +8,9 @@ import static frc.robot.generated.ChoreoTraj.OutpostAndDepotTrajectory$0;
 import static frc.robot.generated.ChoreoTraj.OutpostAndDepotTrajectory$1;
 import static frc.robot.generated.ChoreoTraj.OutpostAndDepotTrajectory$2;
 import static frc.robot.generated.ChoreoTraj.OutpostAndDepotTrajectory$3;
+import static frc.robot.generated.ChoreoTraj.StartCycle;
+import static frc.robot.generated.ChoreoTraj.FullCycle;
+import static frc.robot.generated.ChoreoTraj.EndCycle;
 
 import choreo.auto.AutoChooser;
 import choreo.auto.AutoFactory;
@@ -64,6 +67,7 @@ public final class AutoRoutines {
 
     public void configure() {
         autoChooser.addRoutine("Outpost and Depot", this::outpostAndDepotRoutine);
+        autoChooser.addRoutine("2 Cycle End Middle", this::cycle2EndMiddle);
         SmartDashboard.putData("Auto Chooser", autoChooser);
         RobotModeTriggers.autonomous().whileTrue(autoChooser.selectedCommandScheduler());
     }
@@ -104,6 +108,49 @@ public final class AutoRoutines {
         );
 
         shootingPoseToTower.active().whileTrue(limelight.idle());
+        return routine;
+    }
+
+    private AutoRoutine cycle2EndMiddle() {
+        final AutoRoutine routine = autoFactory.newRoutine("2 Cycle End Middle");
+        final AutoTrajectory startCycle = StartCycle.asAutoTraj(routine);
+        final AutoTrajectory fullCycle = FullCycle.asAutoTraj(routine);
+        final AutoTrajectory endcycle = EndCycle.asAutoTraj(routine);
+
+        autoFactory.bind("stopIntake", intake.stopIntake());
+        autoFactory.bind("intake", intake.intakeCommand());
+        autoFactory.bind("shoot", subsystemCommands.aimAndShoot());
+        autoFactory.bind("stopShooter", shooter.stopCommand());
+        autoFactory.bind("startShooter", Commands.parallel(
+            shooter.spinUpCommand(2600),
+            hood.positionCommand(0.32)
+        ));
+
+        routine.active().onTrue(
+            Commands.sequence(
+                startCycle.resetOdometry(),
+                intake.runOnce(() -> intake.set(Intake.Position.INTAKE)),
+                startCycle.cmd()
+            )
+        );
+
+        startCycle.done().onTrue(
+            Commands.sequence(
+                subsystemCommands.aimAndShoot()
+                    .withTimeout(5),
+                fullCycle.cmd()
+            )
+        );
+
+        fullCycle.done().onTrue(
+            Commands.sequence(
+                subsystemCommands.aimAndShoot()
+                    .withTimeout(5),
+                fullCycle.cmd()
+            )
+        );
+
+        endcycle.active().whileTrue(limelight.idle());       
         return routine;
     }
 }

@@ -172,6 +172,17 @@ public class Intake extends SubsystemBase {
         );
     }
 
+    public Command setIntake() {
+        return runOnce(() -> {
+            set(Position.INTAKE);
+            set(Speed.INTAKE);
+        });
+    }
+
+    public Command stopIntake(){
+        return runOnce(() -> set(Speed.STOP));
+    }
+
     public Command agitateCommand() {
         return runOnce(() -> set(Speed.INTAKE))
             .andThen(
@@ -192,7 +203,7 @@ public class Intake extends SubsystemBase {
     public Command homingCommand() {
         return Commands.sequence(
             runOnce(() -> setPivotPercentOutput(0.1)),
-            Commands.waitUntil(() -> pivotMotor.getSupplyCurrent().getValue().in(Amps) > 6),
+            Commands.waitUntil(() -> pivotMotor.getSupplyCurrent().getValue().in(Amps) > 5.5),
             runOnce(() -> {
                 pivotMotor.setPosition(Position.HOMED.angle());
                 isHomed = true;

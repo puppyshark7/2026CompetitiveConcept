@@ -106,6 +106,10 @@ public class Shooter extends SubsystemBase {
             .andThen(Commands.waitUntil(this::isVelocityWithinTolerance));
     }
 
+    public Command stopCommand() {
+        return runOnce(this::stop);
+    }
+
     public Command dashboardSpinUpCommand() {
         return defer(() -> spinUpCommand(dashboardTargetRPM)); 
     }

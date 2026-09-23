@@ -1,5 +1,8 @@
+// spotless:off
 package frc.robot.generated;
 
+import edu.wpi.first.units.Units;
+import edu.wpi.first.units.measure.*;
 
 /**
  * Generated file containing variables defined in Choreo.
@@ -8,5 +11,9 @@ package frc.robot.generated;
  */
 public final class ChoreoVars {
 
-    private ChoreoVars() {}
+
+    public static final class Poses {
+
+    }
 }
+// spotless:on

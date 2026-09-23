@@ -84,7 +84,7 @@ public class Hood extends SubsystemBase {
     @Override
     public void periodic() {
         updateCurrentPosition();
-        SmartDashboard.putNumber("Hood Current Position", currentPosition);
+        SmartDashboard.putNumber("Hood Current Position", leftServo.get());
     }
 
     @Override
