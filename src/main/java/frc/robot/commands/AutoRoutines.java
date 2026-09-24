@@ -26,6 +26,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Swerve;
+import frc.robot.LimelightHelpers;
 
 public final class AutoRoutines {
     private final Swerve swerve;
@@ -115,24 +116,27 @@ public final class AutoRoutines {
         final AutoRoutine routine = autoFactory.newRoutine("2 Cycle End Middle");
         final AutoTrajectory startCycle = StartCycle.asAutoTraj(routine);
         final AutoTrajectory fullCycle = FullCycle.asAutoTraj(routine);
-        final AutoTrajectory endcycle = EndCycle.asAutoTraj(routine);
+        final AutoTrajectory endCycle = EndCycle.asAutoTraj(routine);
 
-        autoFactory.bind("stopIntake", intake.stopIntake());
-        autoFactory.bind("intake", intake.intakeCommand());
-        autoFactory.bind("shoot", subsystemCommands.aimAndShoot());
-        autoFactory.bind("stopShooter", shooter.stopCommand());
-        autoFactory.bind("startShooter", Commands.parallel(
-            shooter.spinUpCommand(2600),
-            hood.positionCommand(0.32)
-        ));
+        //autoFactory.bind("stopIntake", intake.stopIntake());
+        //autoFactory.bind("intake", intake.setIntake());
+        // autoFactory.bind("shoot", subsystemCommands.aimAndShoot());
+        // autoFactory.bind("stopShooter", shooter.stopCommand());
+        // autoFactory.bind("startShooter", Commands.parallel(
+        //     //Commands.runOnce(() -> LimelightHelpers.setPipelineIndex("",0)),
+        //     shooter.spinUpCommand(2600)));
 
         routine.active().onTrue(
             Commands.sequence(
                 startCycle.resetOdometry(),
+                //hood.positionCommand(0.32),
                 intake.runOnce(() -> intake.set(Intake.Position.INTAKE)),
                 startCycle.cmd()
             )
         );
+
+        startCycle.atTime("intake").onTrue(intake.intakeCommand());
+        startCycle.atTime("stopIntake").onTrue(intake.stopIntake());
 
         startCycle.done().onTrue(
             Commands.sequence(
@@ -146,11 +150,11 @@ public final class AutoRoutines {
             Commands.sequence(
                 subsystemCommands.aimAndShoot()
                     .withTimeout(5),
-                fullCycle.cmd()
+                endCycle.cmd()
             )
         );
 
-        endcycle.active().whileTrue(limelight.idle());       
+        endCycle.active().whileTrue(limelight.idle());       
         return routine;
     }
 }

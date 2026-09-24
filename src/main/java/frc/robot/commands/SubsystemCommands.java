@@ -4,6 +4,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Floor;
 import frc.robot.subsystems.Hood;
@@ -66,13 +67,16 @@ public final class SubsystemCommands {
     public Command aimAndShoot() {
         final AimAndDriveCommand aimAndDriveCommand = new AimAndDriveCommand(swerve, forwardInput, leftInput);
         final PrepareShotCommand prepareShotCommand = new PrepareShotCommand(shooter, hood, () -> swerve.getState().Pose);
-        return Commands.parallel(
+        return Commands.sequence(
+            Commands.parallel(
             aimAndDriveCommand,
             Commands.waitSeconds(0.25)
                 .andThen(prepareShotCommand),
             Commands.waitUntil(() -> aimAndDriveCommand.isAimed() && prepareShotCommand.isReadyToShoot())
                 .andThen(feed())
-        );
+        ))//.beforeStarting(() -> LimelightHelpers.setPipelineIndex("",0))
+        //.finallyDo(interrupted -> LimelightHelpers.setPipelineIndex("",9))
+        ;
     }
 
     public Command shootManually() {

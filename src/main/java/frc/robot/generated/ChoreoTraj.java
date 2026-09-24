@@ -34,7 +34,7 @@ public record ChoreoTraj(
     public static final ChoreoTraj FullCycle = new ChoreoTraj(
         "FullCycle",
         OptionalInt.empty(),
-        5.1195,
+        6.97294,
         new Pose2d(2, 2, Rotation2d.fromRadians(0.65834)),
         new Pose2d(2, 2.00235, Rotation2d.fromRadians(0.67396))
     );
@@ -90,7 +90,7 @@ public record ChoreoTraj(
     public static final ChoreoTraj StartCycle = new ChoreoTraj(
         "StartCycle",
         OptionalInt.empty(),
-        6.35246,
+        4.79898,
         new Pose2d(3.5, 2, Rotation2d.fromRadians(0)),
         new Pose2d(2, 2.00235, Rotation2d.fromRadians(0.67396))
     );

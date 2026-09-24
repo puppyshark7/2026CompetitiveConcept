@@ -36,8 +36,8 @@ public class Hood extends SubsystemBase {
     public Hood() {
         leftServo = new Servo(Ports.kHoodLeftServo);
         rightServo = new Servo(Ports.kHoodRightServo);
-        leftServo.setBoundsMicroseconds(2000, 1800, 1500, 1200, 1000);
-        rightServo.setBoundsMicroseconds(2000, 1800, 1500, 1200, 1000);
+        leftServo.setBoundsMicroseconds(1950, 1800, 1500, 1200, 1050);
+        rightServo.setBoundsMicroseconds(1950, 1800, 1500, 1200, 1050);
         setPosition(currentPosition);
         SmartDashboard.putData(this);
     }
@@ -84,7 +84,7 @@ public class Hood extends SubsystemBase {
     @Override
     public void periodic() {
         updateCurrentPosition();
-        SmartDashboard.putNumber("Hood Current Position", leftServo.get());
+        SmartDashboard.putNumber("Hood Current Position", currentPosition);
     }
 
     @Override
