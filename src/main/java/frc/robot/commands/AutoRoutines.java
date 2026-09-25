@@ -159,4 +159,32 @@ public final class AutoRoutines {
         endCycle.active().whileTrue(limelight.idle());       
         return routine;
     }
+
+    private AutoRoutine basicAuto() {
+        final AutoRoutine routine = autoFactory.newRoutine("Basic Auto");
+        final AutoTrajectory basicShoot = BasicShoot.asAutoTraj(routine);
+
+        //autoFactory.bind("stopIntake", intake.stopIntake());
+        //autoFactory.bind("intake", intake.setIntake());
+        // autoFactory.bind("shoot", subsystemCommands.aimAndShoot());
+        // autoFactory.bind("stopShooter", shooter.stopCommand());
+        // autoFactory.bind("startShooter", Commands.parallel(
+        //     //Commands.runOnce(() -> LimelightHelpers.setPipelineIndex("",0)),
+        //     shooter.spinUpCommand(2600)));
+
+        routine.active().onTrue(
+            Commands.sequence(
+                basicShoot.resetOdometry(),
+                intake.runOnce(() -> intake.set(Position.INTAKE)),
+                Commands.parallel(
+                    hood.positionCommand(0.32),
+                    basicShoot.spawnCmd())
+            )
+        );
+
+        basicShoot.done().onTrue(subsystemCommands.aimAndShoot().withTimeout(5));
+    
+        return routine;
+    }
 }
+

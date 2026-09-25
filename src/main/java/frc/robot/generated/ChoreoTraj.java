@@ -38,20 +38,6 @@ public record ChoreoTraj(
         new Pose2d(2, 2, Rotation2d.fromRadians(0.65834)),
         new Pose2d(2, 2.00235, Rotation2d.fromRadians(0.67396))
     );
-    public static final ChoreoTraj IntakeCycle = new ChoreoTraj(
-        "IntakeCycle",
-        OptionalInt.empty(),
-        3.85664,
-        new Pose2d(2, 2, Rotation2d.fromRadians(0.65834)),
-        new Pose2d(5.8579, 3.19445, Rotation2d.fromRadians(-3.14159))
-    );
-    public static final ChoreoTraj OldFullCycle = new ChoreoTraj(
-        "OldFullCycle",
-        OptionalInt.empty(),
-        5.76481,
-        new Pose2d(2, 2, Rotation2d.fromRadians(0.65834)),
-        new Pose2d(2, 2, Rotation2d.fromRadians(0.67318))
-    );
     public static final ChoreoTraj OutpostAndDepotTrajectory = new ChoreoTraj(
         "OutpostAndDepotTrajectory",
         OptionalInt.empty(),
@@ -94,6 +80,13 @@ public record ChoreoTraj(
         new Pose2d(3.5, 2, Rotation2d.fromRadians(0)),
         new Pose2d(2, 2.00235, Rotation2d.fromRadians(0.67396))
     );
+    public static final ChoreoTraj BasicShoot = new ChoreoTraj(
+        "BasicShoot",
+        OptionalInt.empty(),
+        0.7097,
+        new Pose2d(3.55088, 4, Rotation2d.fromRadians(0)),
+        new Pose2d(1.85667, 4, Rotation2d.fromRadians(0))
+    );
 
     /**
      * A map between trajectory names and their corresponding data.
@@ -102,14 +95,13 @@ public record ChoreoTraj(
     public static final Map<String, ChoreoTraj> ALL_TRAJECTORIES = Map.ofEntries(
         Map.entry("EndCycle", EndCycle),
         Map.entry("FullCycle", FullCycle),
-        Map.entry("IntakeCycle", IntakeCycle),
-        Map.entry("OldFullCycle", OldFullCycle),
         Map.entry("OutpostAndDepotTrajectory", OutpostAndDepotTrajectory),
         Map.entry("OutpostAndDepotTrajectory$0", OutpostAndDepotTrajectory$0),
         Map.entry("OutpostAndDepotTrajectory$1", OutpostAndDepotTrajectory$1),
         Map.entry("OutpostAndDepotTrajectory$2", OutpostAndDepotTrajectory$2),
         Map.entry("OutpostAndDepotTrajectory$3", OutpostAndDepotTrajectory$3),
-        Map.entry("StartCycle", StartCycle)
+        Map.entry("StartCycle", StartCycle),
+        Map.entry("BasicShoot", BasicShoot)
     );
 
     /**
