@@ -26,6 +26,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.Intake.Position;
 import frc.robot.LimelightHelpers;
 
 public final class AutoRoutines {
@@ -129,9 +130,10 @@ public final class AutoRoutines {
         routine.active().onTrue(
             Commands.sequence(
                 startCycle.resetOdometry(),
-                //hood.positionCommand(0.32),
-                intake.runOnce(() -> intake.set(Intake.Position.INTAKE)),
-                startCycle.cmd()
+                intake.runOnce(() -> intake.set(Position.INTAKE)),
+                Commands.parallel(
+                    hood.positionCommand(0.32),
+                    startCycle.spawnCmd())
             )
         );
 
@@ -142,7 +144,7 @@ public final class AutoRoutines {
             Commands.sequence(
                 subsystemCommands.aimAndShoot()
                     .withTimeout(5),
-                fullCycle.cmd()
+                fullCycle.spawnCmd()
             )
         );
 
@@ -150,7 +152,7 @@ public final class AutoRoutines {
             Commands.sequence(
                 subsystemCommands.aimAndShoot()
                     .withTimeout(5),
-                endCycle.cmd()
+                endCycle.spawnCmd()
             )
         );
 
