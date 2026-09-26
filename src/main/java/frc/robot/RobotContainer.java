@@ -36,11 +36,11 @@ import frc.util.SwerveTelemetry;
  */
 public class RobotContainer {
     private final Swerve swerve = new Swerve();
-    private final Intake intake = new Intake();
-    private final Floor floor = new Floor();
-    private final Feeder feeder = new Feeder();
-    private final Shooter shooter = new Shooter();
-    private final Hood hood = new Hood();
+    //private final Intake intake = new Intake();
+    // private final Floor floor = new Floor();
+    // private final Feeder feeder = new Feeder();
+    // private final Shooter shooter = new Shooter();
+    // private final Hood hood = new Hood();
     private final Limelight limelight = new Limelight("limelight");
 
     private final SwerveTelemetry swerveTelemetry = new SwerveTelemetry(Driving.kMaxSpeed.in(MetersPerSecond));
@@ -86,18 +86,18 @@ public class RobotContainer {
      */
     private void configureBindings() {
         configureManualDriveBindings();
-        limelight.setDefaultCommand(updateVisionCommand());
+        // limelight.setDefaultCommand(updateVisionCommand());
 
-        RobotModeTriggers.autonomous().or(RobotModeTriggers.teleop())
-            .onTrue(intake.homingCommand())
-            ;
+        // RobotModeTriggers.autonomous().or(RobotModeTriggers.teleop())
+        //     .onTrue(intake.homingCommand().withTimeout(3.5))
+        //     ;
 
-        driver.rightTrigger().whileTrue(subsystemCommands.aimAndShoot());
-        driver.rightBumper().whileTrue(subsystemCommands.shootManually());
-        driver.povLeft().whileTrue(hood.adjustPositionCommand(-1.0));
-        driver.povRight().whileTrue(hood.adjustPositionCommand(1.0));
-        driver.leftTrigger().whileTrue(intake.intakeCommand());
-        driver.leftBumper().onTrue(intake.runOnce(() -> intake.set(Intake.Position.STOWED)));
+        // driver.rightTrigger().whileTrue(subsystemCommands.aimAndShoot());
+        // driver.rightBumper().whileTrue(subsystemCommands.shootManually());
+        // driver.povLeft().whileTrue(hood.adjustPositionCommand(-1.0));
+        // driver.povRight().whileTrue(hood.adjustPositionCommand(1.0));
+        // driver.leftTrigger().whileTrue(intake.intakeCommand());
+        // driver.leftBumper().onTrue(intake.runOnce(() -> intake.set(Intake.Position.STOWED)));
     }
 
     private void configureManualDriveBindings() {
@@ -113,6 +113,7 @@ public class RobotContainer {
         driver.x().onTrue(Commands.runOnce(() -> manualDriveCommand.setLockedHeading(Rotation2d.kCCW_90deg)));
         driver.y().onTrue(Commands.runOnce(() -> manualDriveCommand.setLockedHeading(Rotation2d.kZero)));
         driver.povDown().onTrue(Commands.runOnce(() -> manualDriveCommand.seedFieldCentric()));
+        // driver.povUp().onTrue(Commands.runOnce(() -> intake.homingCommand().withTimeout(3.5)));
     }
 
 

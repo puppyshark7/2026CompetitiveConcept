@@ -11,6 +11,7 @@ import static frc.robot.generated.ChoreoTraj.OutpostAndDepotTrajectory$3;
 import static frc.robot.generated.ChoreoTraj.StartCycle;
 import static frc.robot.generated.ChoreoTraj.FullCycle;
 import static frc.robot.generated.ChoreoTraj.EndCycle;
+import static frc.robot.generated.ChoreoTraj.BasicShoot;
 
 import choreo.auto.AutoChooser;
 import choreo.auto.AutoFactory;
@@ -68,8 +69,9 @@ public final class AutoRoutines {
     }
 
     public void configure() {
-        autoChooser.addRoutine("Outpost and Depot", this::outpostAndDepotRoutine);
+        //autoChooser.addRoutine("Outpost and Depot", this::outpostAndDepotRoutine);
         autoChooser.addRoutine("2 Cycle End Middle", this::cycle2EndMiddle);
+        autoChooser.addRoutine("Basic Auto", this::basicAuto);
         SmartDashboard.putData("Auto Chooser", autoChooser);
         RobotModeTriggers.autonomous().whileTrue(autoChooser.selectedCommandScheduler());
     }
@@ -132,7 +134,7 @@ public final class AutoRoutines {
                 startCycle.resetOdometry(),
                 intake.runOnce(() -> intake.set(Position.INTAKE)),
                 Commands.parallel(
-                    hood.positionCommand(0.32),
+                    hood.positionCommand(0.5),
                     startCycle.spawnCmd())
             )
         );
@@ -175,14 +177,13 @@ public final class AutoRoutines {
         routine.active().onTrue(
             Commands.sequence(
                 basicShoot.resetOdometry(),
-                intake.runOnce(() -> intake.set(Position.INTAKE)),
                 Commands.parallel(
-                    hood.positionCommand(0.32),
+                    hood.positionCommand(0.28),
                     basicShoot.spawnCmd())
             )
         );
 
-        basicShoot.done().onTrue(subsystemCommands.aimAndShoot().withTimeout(5));
+        basicShoot.done().onTrue(subsystemCommands.shootManually().withTimeout(5));
     
         return routine;
     }
