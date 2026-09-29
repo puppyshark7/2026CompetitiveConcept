@@ -16,9 +16,15 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.Driving;
+import frc.robot.commands.AutoRoutines;
 import frc.robot.commands.ManualDriveCommand;
 import frc.robot.commands.SubsystemCommands;
+import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Floor;
 import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Swerve;
 import frc.util.SwerveTelemetry;
 
@@ -34,14 +40,30 @@ public class RobotContainer {
     // private final Floor floor = new Floor();
     // private final Feeder feeder = new Feeder();
     // private final Shooter shooter = new Shooter();
-    private final Hood hood = new Hood();
+    // private final Hood hood = new Hood();
+    private final Limelight limelight = new Limelight("limelight");
 
     private final SwerveTelemetry swerveTelemetry = new SwerveTelemetry(Driving.kMaxSpeed.in(MetersPerSecond));
     
     private final CommandXboxController driver = new CommandXboxController(0);
+
+    private final AutoRoutines autoRoutines = new AutoRoutines(
+        swerve,
+        intake,
+        floor,
+        feeder,
+        shooter,
+        hood,
+        limelight
+    );
     
     private final SubsystemCommands subsystemCommands = new SubsystemCommands(
         swerve,
+        intake,
+        floor,
+        feeder,
+        shooter,
+        hood,
         () -> -driver.getLeftY(),
         () -> -driver.getLeftX()
     );
@@ -49,6 +71,7 @@ public class RobotContainer {
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
         configureBindings();
+        autoRoutines.configure();
         swerve.registerTelemetry(swerveTelemetry::telemeterize);
     }
     
@@ -71,8 +94,8 @@ public class RobotContainer {
 
         // driver.rightTrigger().whileTrue(subsystemCommands.aimAndShoot());
         // driver.rightBumper().whileTrue(subsystemCommands.shootManually());
-        driver.povLeft().whileTrue(hood.adjustPositionCommand(-1.0));
-        driver.povRight().whileTrue(hood.adjustPositionCommand(1.0));
+        // driver.povLeft().whileTrue(hood.adjustPositionCommand(-1.0));
+        // driver.povRight().whileTrue(hood.adjustPositionCommand(1.0));
         // driver.leftTrigger().whileTrue(intake.intakeCommand());
         // driver.leftBumper().onTrue(intake.runOnce(() -> intake.set(Intake.Position.STOWED)));
     }
@@ -91,5 +114,21 @@ public class RobotContainer {
         driver.y().onTrue(Commands.runOnce(() -> manualDriveCommand.setLockedHeading(Rotation2d.kZero)));
         driver.povDown().onTrue(Commands.runOnce(() -> manualDriveCommand.seedFieldCentric()));
         // driver.povUp().onTrue(Commands.runOnce(() -> intake.homingCommand().withTimeout(3.5)));
+    }
+
+
+    private Command updateVisionCommand() {
+        return limelight.run(() -> {
+            final Pose2d currentRobotPose = swerve.getState().Pose;
+            final Optional<Limelight.Measurement> measurement = limelight.getMeasurement(currentRobotPose);
+            measurement.ifPresent(m -> {
+                swerve.addVisionMeasurement(
+                    m.poseEstimate.pose, 
+                    m.poseEstimate.timestampSeconds,
+                    m.standardDeviations
+                );
+            });
+        })
+        .ignoringDisable(true);
     }
 }
